@@ -1,0 +1,5 @@
+# CONSTANTS
+UP = 2
+DOWN = -2
+LEFT = -1
+RIGHT = 1
