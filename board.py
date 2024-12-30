@@ -1,12 +1,13 @@
 import pygame
+from config import *
 
 class Board:
-    def __init__(self, width, height, square_size):
-        self.width = width
-        self.height = height
-        self.square_size = square_size
+    def __init__(self, width=SCREEN_WIDTH, height=SCREEN_HEIGHT, square_size=SQUARE_SIZE):
+        self.width = SCREEN_WIDTH
+        self.height = SCREEN_HEIGHT
+        self.square_size = SQUARE_SIZE
 
-    def draw_grid(self, screen, light_color, dark_color):
+    def draw_grid(self, screen, light_color=SQUARE_COLOR_LIGHT, dark_color=SQUARE_COLOR_DARK):
         i = 0
         for x in range(0, self.width, self.square_size):
             for y in range(0, self.height, self.square_size):
