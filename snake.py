@@ -54,3 +54,6 @@ class Snake:
         elif self.direction == LEFT:
             self.coords.insert(0, (head_x - self.size, head_y))
         self.coords.pop()
+
+    def check_collision(self, apple_cords):
+        pass

@@ -15,19 +15,9 @@ if __name__ == '__main__':
     # utwórz planszę
     board = Board()
     # utwórz jabłko
-    apple = Apple()
+    apple = Apple(coords=(SQUARE_SIZE*5, SQUARE_SIZE*5))
     # utwórz snake
     snake = Snake()
-
-    # Rysuj siatkę
-    board.draw_grid(screen)
-    # rysuj jabłko
-    apple.draw(screen, (0, 0))
-    # rysuj węża
-    snake.draw(screen)
-
-    # Aktualizuj ekran
-    pygame.display.flip()
 
     i = 0
     running = True
@@ -43,11 +33,12 @@ if __name__ == '__main__':
         keys = pygame.key.get_pressed()
         snake.set_direction(keys)
         snake.move()
+        snake.check_collision(apple.get_coords())
 
         # Rysuj siatkę
         board.draw_grid(screen)
         # rysuj jabłko
-        apple.draw(screen, (SQUARE_SIZE*3, SQUARE_SIZE*3))
+        apple.draw(screen)
         # rysuj węża
         snake.draw(screen)
         # Aktualizuj ekran
