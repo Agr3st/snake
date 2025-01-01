@@ -3,6 +3,17 @@ from config import *
 from apple import Apple
 from snake import Snake
 from board import Board
+from random import choice
+
+
+def check_collisions(snake, apple):
+    # apple
+    if snake.get_head_coords() == tuple(apple.get_coords()):
+        snake.eat_apple()
+        apple.set_cords()
+
+    # walls and snake itself
+    return snake.check_collision()
 
 if __name__ == '__main__':
     # inicjalizuje wszystkie podmoduły pygame
@@ -15,7 +26,7 @@ if __name__ == '__main__':
     # utwórz planszę
     board = Board()
     # utwórz jabłko
-    apple = Apple(coords=(SQUARE_SIZE*5, SQUARE_SIZE*5))
+    apple = Apple()
     # utwórz snake
     snake = Snake()
 
@@ -29,12 +40,6 @@ if __name__ == '__main__':
             if event.type == pygame.QUIT:  # If user clicked close
                 running = False  # Flag that we are done so we exit this loop
 
-        # sterowanie
-        keys = pygame.key.get_pressed()
-        snake.set_direction(keys)
-        snake.move()
-        snake.check_collision(apple.get_coords())
-
         # Rysuj siatkę
         board.draw_grid(screen)
         # rysuj jabłko
@@ -43,3 +48,20 @@ if __name__ == '__main__':
         snake.draw(screen)
         # Aktualizuj ekran
         pygame.display.flip()
+
+        # sterowanie
+        keys = pygame.key.get_pressed()
+        snake.set_direction(keys)
+        snake.move()
+
+        running = check_collisions(snake, apple)
+
+"""
+to-do:
+- poprawić sterowanie, aby reakcja na klawisze była praktycznie natychmiastowa
+- poprawić losowanie koordynatów apple, aby nie pojawiało się tam, gdzie snake
+- dodać okno game over
+- dodać score i best_score
+- dodać dźwięk jedzenia
+- refactoring + dobranie optymalnych parametrów
+"""
