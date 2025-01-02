@@ -9,26 +9,22 @@ def check_collisions(snake, apple):
     # apple
     if snake.get_head_coords() == tuple(apple.get_coords()):
         snake.eat_apple()
-
-        x = choice(range(0, SCREEN_WIDTH, SQUARE_SIZE))
-        y = choice(range(0, SCREEN_WIDTH, SQUARE_SIZE))
-        while not check_coords(snake.get_coords(), [x, y]):
-            x = choice(range(0, SCREEN_WIDTH, SQUARE_SIZE))
-            y = choice(range(0, SCREEN_WIDTH, SQUARE_SIZE))
-        apple.set_cords([x, y])
+        apple_coords = generate_random_coords(snake.get_coords())
+        apple.set_coords(apple_coords)
 
     # walls and snake itself
     return snake.check_collision()
 
-def check_coords(snake_coords, apple_coords):
+def generate_random_coords(snake_coords):
     """
-    check if apple's coords are not same as snake's coords
-    :return: True if coords are not the same, otherwise False
+    :return: [x, y] - random coords that are different from snake's coords
     """
-    for x, y in snake_coords:
-        if x == apple_coords[0] and y == apple_coords[1]:
-            return False
-    return True
+    while True:
+        x = choice(range(0, SCREEN_WIDTH, SQUARE_SIZE))
+        y = choice(range(0, SCREEN_WIDTH, SQUARE_SIZE))
+        if (x, y) not in snake_coords:
+            break
+    return [x, y]
 
 
 if __name__ == '__main__':
@@ -78,7 +74,6 @@ if __name__ == '__main__':
 """
 to-do:
 - poprawić sterowanie, aby reakcja na klawisze była praktycznie natychmiastowa
-- poprawić losowanie koordynatów apple, aby nie pojawiało się tam, gdzie snake
 - dodać okno game over
 - dodać score i best_score
 - dodać dźwięk jedzenia

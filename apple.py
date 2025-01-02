@@ -21,7 +21,7 @@ class Apple:
         """
         screen.blit(self.img_scaled, self.coords)
 
-    def set_cords(self, coords):
+    def set_coords(self, coords):
         self.coords = coords
 
     def get_coords(self):

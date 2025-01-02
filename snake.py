@@ -32,20 +32,22 @@ class Snake:
                 pygame.draw.rect(surface=screen, color=color, rect=rectangle)
 
     def set_direction(self, keys):
+        opposite_directions = {UP: DOWN, DOWN: UP, RIGHT: LEFT, LEFT: RIGHT}
+
         if keys[pygame.K_UP]:
-            if self.direction == DOWN:
+            if self.direction == opposite_directions[UP]:
                 return
             self.direction = UP
         elif keys[pygame.K_DOWN]:
-            if self.direction == UP:
+            if self.direction == opposite_directions[DOWN]:
                 return
             self.direction = DOWN
         elif keys[pygame.K_RIGHT]:
-            if self.direction == LEFT:
+            if self.direction == opposite_directions[RIGHT]:
                 return
             self.direction = RIGHT
         elif keys[pygame.K_LEFT]:
-            if self.direction == RIGHT:
+            if self.direction == opposite_directions[LEFT]:
                 return
             self.direction = LEFT
 
@@ -75,10 +77,8 @@ class Snake:
 
     def check_collision(self):
         # snake's body
-        for coords in self.coords[1:]:
-            if coords == self.coords[0]:
-                # game over
-                return False
+        if len(self.coords) != len(set(self.coords)):
+            return False
 
         # walls
         head_x, head_y = self.coords[0]
