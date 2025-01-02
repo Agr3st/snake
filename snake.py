@@ -2,18 +2,13 @@ import pygame
 from config import *
 
 class Snake:
-    def __init__(self, size=SQUARE_SIZE, length=SNAKE_START_LENGTH, head_coords=SNAKE_START_HEAD_CORDS):
-        """
-        :param size: size of a single rectangle
-        :param length: number of rectangles
-        :param head_coords: x, y pair
-        """
+    def __init__(self):
         self.coords = []
-        self.size = size
+        self.size = SQUARE_SIZE
         self.direction = RIGHT
-        x, y = head_coords
-        for i in range(length):
-            self.coords.append((x - i * size, y))
+        x, y = SNAKE_START_HEAD_CORDS
+        for i in range(SNAKE_START_LENGTH):
+            self.coords.append((x - i * self.size, y))
 
     def get_head_coords(self):
         return self.coords[0]
@@ -22,7 +17,6 @@ class Snake:
         return self.coords
 
     def draw(self, screen, head_color=SNAKE_HEAD_COLOR, color=SNAKE_COLOR):
-        # mozna utworzyc 1 obiekt Rect i tylko go przesuwac, żeby rysować kolejne kwadraty snake'a
         for i, coords in enumerate(self.coords):
             x, y = coords
             rectangle = pygame.Rect(x, y, self.size, self.size)
@@ -76,13 +70,16 @@ class Snake:
             self.coords.append((last_x, last_y + SQUARE_SIZE))
 
     def check_collision(self):
-        # snake's body
+        """
+        :return: True if there is a collision, otherwise False
+        """
+        # Collision between the snake and itself
         if len(self.coords) != len(set(self.coords)):
-            return False
+            return True
 
-        # walls
+        # Collision between the snake and walls
         head_x, head_y = self.coords[0]
         if head_x < 0 or head_y < 0 or head_x + self.size > SCREEN_WIDTH or head_y + self.size > SCREEN_HEIGHT:
-            return False
+            return True
 
-        return True
+        return False
