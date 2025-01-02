@@ -13,8 +13,7 @@ class Apple:
         """
         self.img = pygame.image.load(os.path.join('img', 'apple.png')).convert_alpha()
         self.img_scaled = pygame.transform.scale(self.img, (size, size))
-        self.coords = [80, 80]
-        self.set_cords()
+        self.coords = [SQUARE_SIZE, SQUARE_SIZE]
 
     def draw(self, screen):
         """
@@ -22,9 +21,8 @@ class Apple:
         """
         screen.blit(self.img_scaled, self.coords)
 
-    def set_cords(self):
-        self.coords[0] = choice(range(0, SCREEN_WIDTH, SQUARE_SIZE))
-        self.coords[1] = choice(range(0, SCREEN_WIDTH, SQUARE_SIZE))
+    def set_cords(self, coords):
+        self.coords = coords
 
     def get_coords(self):
         return self.coords

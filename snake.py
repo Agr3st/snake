@@ -18,6 +18,9 @@ class Snake:
     def get_head_coords(self):
         return self.coords[0]
 
+    def get_coords(self):
+        return self.coords
+
     def draw(self, screen, head_color=SNAKE_HEAD_COLOR, color=SNAKE_COLOR):
         # mozna utworzyc 1 obiekt Rect i tylko go przesuwac, żeby rysować kolejne kwadraty snake'a
         for i, coords in enumerate(self.coords):
