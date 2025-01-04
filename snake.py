@@ -6,6 +6,7 @@ class Snake:
         self.coords = []
         self.size = SQUARE_SIZE
         self.direction = RIGHT
+        self.eaten_apple = False
         x, y = SNAKE_START_HEAD_CORDS
         for i in range(SNAKE_START_LENGTH):
             self.coords.append((x - i * self.size, y))
@@ -55,19 +56,11 @@ class Snake:
             self.coords.insert(0, (head_x + self.size, head_y))
         elif self.direction == LEFT:
             self.coords.insert(0, (head_x - self.size, head_y))
-        self.coords.pop()
+        if not self.eaten_apple:
+            self.coords.pop()
 
-    def eat_apple(self):
-        last_x, last_y = self.coords[-1]
-        prev_last_x, prev_last_y = self.coords[-2]
-        if prev_last_x > last_x and prev_last_y == last_y:
-            self.coords.append((last_x - SQUARE_SIZE, last_y))
-        elif prev_last_x < last_x and prev_last_y == last_y:
-            self.coords.append((last_x + SQUARE_SIZE, last_y))
-        elif prev_last_y > last_y and prev_last_x == last_x:
-            self.coords.append((last_x, last_y - SQUARE_SIZE))
-        elif prev_last_y < last_y and prev_last_x == last_x:
-            self.coords.append((last_x, last_y + SQUARE_SIZE))
+    def eat_apple(self, state):
+        self.eaten_apple = state
 
     def check_collision(self):
         """

@@ -38,11 +38,12 @@ class Game:
         """
         # Collision between the snake and an apple
         if self.snake.get_head_coords() == tuple(self.apple.get_coords()):
-            self.snake.eat_apple()
+            self.snake.eat_apple(state=True)
             apple_coords = self.generate_random_coords(self.snake.get_coords())
             self.apple.set_coords(apple_coords)
             # self.clock_tick_limit += 0.2
-
+        else:
+            self.snake.eat_apple(state=False)
         # Collision between the snake and walls or itself
         return self.snake.check_collision()
 
